@@ -2,6 +2,7 @@ var example = example || {};
 
 var alfa_absolute = '/muse/elements/alfa_absolute';
 var beta_absolute = '/muse/elements/beta_absolute';
+var concentration = '/muse/elements/experimental/concentration';
 
 (function () {
     "use strict";
@@ -70,7 +71,7 @@ var beta_absolute = '/muse/elements/beta_absolute';
         this.oscPort.on("message", this.mapMessage.bind(this));
         this.oscPort.on("message", function (msg) {
             var address = msg.address;
-            if (address == beta_absolute) {
+            if (address == concentration) {
              console.log("message", msg);
             }
         });
@@ -78,24 +79,26 @@ var beta_absolute = '/muse/elements/beta_absolute';
 
     example.SocketSynth.prototype.mapMessage = function (oscMessage) {
         //$("#message").text(fluid.prettyPrintJSON(oscMessage));
-        $("#message").text(JSON.stringify(oscMessage));
-
         var address = oscMessage.address;
-        var leftEar = oscMessage.args[0];
-        var leftForehead = oscMessage.args[1];
-        var rightForehead = oscMessage.args[2];
-        var rightEar = oscMessage.args[3];
+            if (address == concentration) {
+                $("#message").text(JSON.stringify(oscMessage));
+            }
+
+        //var leftEar = oscMessage.args[0];
+        //var leftForehead = oscMessage.args[1];
+        //var rightForehead = oscMessage.args[2];
+        //var rightEar = oscMessage.args[3];
 
         var transformSpec = this.valueMap[address];
 
-        if (transformSpec) {
-            var transformed = transformSpec.transform(leftEar);
-        }
+        //if (transformSpec) {
+        //    var transformed = transformSpec.transform(leftEar);
+        //}
         
-        if (address == beta_absolute) {
+        if (address == concentration) {
           //console.log(alfaWave + " | " + betaWave + " | " + gamaWave + " | " + thetaWave + " | ");
-          var score = (leftForehead + rightForehead)/2;
-
+          //var score = (leftForehead + rightForehead)/2;
+          var score = oscMessage.args[0];
           score = score.toFixed(1);
           $("#score").html(score);
         }

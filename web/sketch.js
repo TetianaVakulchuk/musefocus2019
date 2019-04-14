@@ -1,6 +1,6 @@
 var FocusState = function(){
 
-  var FOCUS_BRAKEPOINT = 4.0;
+  var FOCUS_BRAKEPOINT = 0.5;
 
   var currentFocusState = false;
   var prevFocusState = true;
@@ -103,7 +103,7 @@ function draw() {
   drawPerfectCircle();
   moveShape();
   var focusStateStatus = focusState.isFocusStateChanged();
-  if(focusStateStatus != 0 && focusChangeSound){
+  if(focusStateStatus == -1 && focusChangeSound){
     //alert(focusStateStatus);
   focusChangeSound.play();
   }
