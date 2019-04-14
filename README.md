@@ -1,8 +1,5 @@
-# museBlink
-*read with your mind not eyes!*
-It reads alpha_absolute from muse and according to sum of all channel alpha values changes the fontSize of the text the purpose is when you focus you read bigger if your away thinking than just skim it don't spend time or opposite. Experiment.
+# museFocus
 
-![Demo](https://media.giphy.com/media/3ohjUZnd8hPaguPbDq/giphy.gif)
 
 # Connection with muse headset
 
