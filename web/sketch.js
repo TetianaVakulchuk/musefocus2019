@@ -1,6 +1,6 @@
 var FocusState = function(){
 
-  var FOCUS_BRAKEPOINT = 0.5;
+  var FOCUS_BRAKEPOINT = 0.3;
 
   var currentFocusState = false;
   var prevFocusState = true;
