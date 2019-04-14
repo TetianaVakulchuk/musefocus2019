@@ -1,5 +1,17 @@
 # museFocus
 
+#run
+
+run web app
+```bash
+node .
+```
+
+run muse-io to connect data
+```bash
+muse-io --preset AD --osc osc.udp://192.168.8.109:57121 --device Muse-49F5
+```
+
 
 # Connection with muse headset
 
