@@ -3,6 +3,7 @@ var example = example || {};
 var alfa_absolute = '/muse/elements/alfa_absolute';
 var beta_absolute = '/muse/elements/beta_absolute';
 var concentration = '/muse/elements/experimental/concentration';
+var data_is_good  = '/muse/elements/is_good';
 
 (function () {
     "use strict";
@@ -78,16 +79,21 @@ var concentration = '/muse/elements/experimental/concentration';
     };
 
     example.SocketSynth.prototype.mapMessage = function (oscMessage) {
-        //$("#message").text(fluid.prettyPrintJSON(oscMessage));
         var address = oscMessage.address;
-            if (address == concentration) {
-                $("#message").text(JSON.stringify(oscMessage));
-            }
+        if (address == data_is_good && data_is_good === 0) {
+            alert('Data is not valid');
+            return false;
+        }
 
-        //var leftEar = oscMessage.args[0];
-        //var leftForehead = oscMessage.args[1];
-        //var rightForehead = oscMessage.args[2];
-        //var rightEar = oscMessage.args[3];
+        if (address !== beta_absolute) {
+            return false;
+        }
+        $("#message").text(JSON.stringify(oscMessage));
+
+        var leftEar = oscMessage.args[0];
+        var leftForehead = oscMessage.args[1];
+        var rightForehead = oscMessage.args[2];
+        var rightEar = oscMessage.args[3];
 
         var transformSpec = this.valueMap[address];
 
@@ -95,13 +101,11 @@ var concentration = '/muse/elements/experimental/concentration';
         //    var transformed = transformSpec.transform(leftEar);
         //}
         
-        if (address == concentration) {
-          //console.log(alfaWave + " | " + betaWave + " | " + gamaWave + " | " + thetaWave + " | ");
-          //var score = (leftForehead + rightForehead)/2;
-          var score = oscMessage.args[0];
-          score = score.toFixed(1);
-          $("#score").html(score);
-        }
+        //console.log(alfaWave + " | " + betaWave + " | " + gamaWave + " | " + thetaWave + " | ");
+        var score = (leftEar + leftForehead + rightForehead + rightEar)/4;
+        //var score = oscMessage.args[0];
+        score = score.toFixed(1);
+        $("#score").html(score);
     };
 
 }());
