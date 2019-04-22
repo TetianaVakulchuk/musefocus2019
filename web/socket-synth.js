@@ -19,29 +19,29 @@ var data_is_good  = '/muse/elements/is_good';
     var carrierSpec = {
         freq: {
             inputPath: "carrier.freq.value",
-            transform: freqTransform
+            transform: freqTransform,
         },
-        mul: {
+        mul : {
             inputPath: "carrier.mul",
-            transform: identityTransform
-        }
+            transform: identityTransform,
+        },
     };
 
     var modulatorSpec = {
         freq: {
             inputPath: "modulator.freq.value",
-            transform: freqTransform
+            transform: freqTransform,
         },
-        mul: {
+        mul : {
             inputPath: "modulator.mul",
-            transform: freqTransform
-        }
+            transform: freqTransform,
+        },
     };
 
     example.SocketSynth = function () {
         this.oscPort = new osc.WebSocketPort({
-            url: "ws://localhost:8081"
-        });
+                                                 url: "ws://localhost:8081",
+                                             });
 
         this.listen();
         this.oscPort.open();
@@ -51,16 +51,13 @@ var data_is_good  = '/muse/elements/is_good';
         };
 
         this.valueMap = {
-            "/muse/acc": carrierSpec.freq,
-            "/muse/acc": carrierSpec.freq,
-
-            "/muse/acc": carrierSpec.mul,
+            "/muse/acc"  : carrierSpec.freq,
             "/fader2/out": carrierSpec.mul,
 
-            "/knobs/2": modulatorSpec.freq,
+            "/knobs/2"   : modulatorSpec.freq,
             "/fader3/out": modulatorSpec.freq,
 
-            "/knobs/3": modulatorSpec.mul,
+            "/knobs/3"   : modulatorSpec.mul,
             "/fader4/out": modulatorSpec.mul,
 
         };
@@ -68,43 +65,39 @@ var data_is_good  = '/muse/elements/is_good';
 
     example.SocketSynth.prototype.listen = function () {
         this.oscPort.on("ready", console.log('ready'));
-        this.oscPort.on("error", function (e) {console.log(e);});
-        this.oscPort.on("message", this.mapMessage.bind(this));
-        this.oscPort.on("message", function (msg) {
-            var address = msg.address;
-            if (address == concentration) {
-             console.log("message", msg);
-            }
+        this.oscPort.on("error", function (e) {
+            console.log(e);
         });
+        this.oscPort.on("message", this.mapMessage.bind(this));
     };
 
     example.SocketSynth.prototype.mapMessage = function (oscMessage) {
         var address = oscMessage.address;
-        if (address == data_is_good && data_is_good === 0) {
+        if (address === data_is_good && data_is_good === 0) {
             alert('Data is not valid');
             return false;
         }
 
-        if (address !== beta_absolute) {
+        if (address !== concentration) {
             return false;
         }
         $("#message").text(JSON.stringify(oscMessage));
+        console.log("message", msg);
 
-        var leftEar = oscMessage.args[0];
-        var leftForehead = oscMessage.args[1];
+        var leftEar       = oscMessage.args[0];
+        var leftForehead  = oscMessage.args[1];
         var rightForehead = oscMessage.args[2];
-        var rightEar = oscMessage.args[3];
+        var rightEar      = oscMessage.args[3];
 
         var transformSpec = this.valueMap[address];
 
         //if (transformSpec) {
         //    var transformed = transformSpec.transform(leftEar);
         //}
-        
-        //console.log(alfaWave + " | " + betaWave + " | " + gamaWave + " | " + thetaWave + " | ");
-        var score = (leftEar + leftForehead + rightForehead + rightEar)/4;
-        //var score = oscMessage.args[0];
-        score = score.toFixed(1);
+
+        // var score = (leftEar + leftForehead + rightForehead + rightEar)/4;
+        var score = oscMessage.args[0];
+        score     = score.toFixed(1);
         $("#score").html(score);
     };
 

@@ -1,17 +1,16 @@
-# museFocus
+# Muse Focus
 
-#run
+## Installation
 
-run web app
-```bash
-node .
-```
+1. Run <code>npm install</code> in the terminal to install all required Node dependencies
+2. In the <code>web</code> directory, run <code>bower install</code> to install all web dependencies
 
-run muse-io to connect data
-```bash
-muse-io --preset AD --osc osc.udp://192.168.8.109:57121 --device Muse-49F5
-```
+## Running the Example
 
+1. Run `node .` in the Terminal
+2. Run muse-io to connect data
+`muse-io --preset AD --osc osc.udp://192.168.8.109:57121 --device-search Muse`
+3. Open `http://localhost:8081` in your browser
 
 # Connection with muse headset
 
@@ -61,17 +60,6 @@ faders in the Lemur project. Here is the mapping:
 </table>
 
 If you don't have a copy of Lemur, you can use the SuperCollider test client created by [Jascha Narveson](https://github.com/jaschanarveson), which is located in the [utils](../utils/supercollider-lemur-faderlab-style-client.scd) directory.
-
-## Installation
-
-1. Run <code>npm install</code> in the terminal to install all required Node dependencies
-2. In the <code>web</code> directory, run <code>bower install</code> to install all web dependencies
-
-## Running the Example
-
-1. Run `node .` in the Terminal
-2. Open `http://localhost:8081` in your browser
-3. Control the synth using OSC messages sent from Lemur or another OSC server
 
 ## Remarks
 
