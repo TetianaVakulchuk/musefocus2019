@@ -83,7 +83,7 @@ var data_is_good  = '/muse/elements/is_good';
             return false;
         }
         $("#message").text(JSON.stringify(oscMessage));
-        console.log("message", msg);
+        console.log("message", oscMessage);
 
         var leftEar       = oscMessage.args[0];
         var leftForehead  = oscMessage.args[1];
