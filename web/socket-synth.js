@@ -3,7 +3,6 @@ var example = example || {};
 var alfa_absolute = '/muse/elements/alfa_absolute';
 var beta_absolute = '/muse/elements/beta_absolute';
 var concentration = '/muse/elements/experimental/concentration';
-var data_is_good  = '/muse/elements/is_good';
 
 (function () {
     "use strict";
@@ -72,6 +71,7 @@ var data_is_good  = '/muse/elements/is_good';
     };
 
     example.SocketSynth.prototype.mapMessage = function (oscMessage) {
+        //$("#message").text(fluid.prettyPrintJSON(oscMessage));
         var address = oscMessage.address;
         if (address === data_is_good && data_is_good === 0) {
             alert('Data is not valid');
