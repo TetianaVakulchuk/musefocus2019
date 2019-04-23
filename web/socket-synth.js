@@ -3,6 +3,7 @@ var example = example || {};
 var alfa_absolute = '/muse/elements/alfa_absolute';
 var beta_absolute = '/muse/elements/beta_absolute';
 var concentration = '/muse/elements/experimental/concentration';
+var data_is_good  = '/muse/elements/is_good';
 
 (function () {
     "use strict";
