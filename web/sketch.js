@@ -95,12 +95,14 @@ function promptForExperiment() {
 
 function startNewExperiment(name) {
     localStorage.setItem('museFocus:currentExperimentName', name);
+    localStorage.setItem('museFocus:currentExperimentStartTime', Date.now());
 
 }
 
 function stopExperiment() {
     var currentExperiment = localStorage.getItem('museFocus:currentExperimentName');
     localStorage.removeItem('museFocus:currentExperimentName');
+    localStorage.removeItem('museFocus:currentExperimentStartTime');
     var currentExperimentsArchive = JSON.parse(localStorage.getItem('museFocus:experimentsArchive'));
     if (currentExperimentsArchive === null) {
         currentExperimentsArchive = [];
@@ -115,6 +117,7 @@ function writeExperimentData(focusState) {
     var currentExperimentName = localStorage.getItem('museFocus:currentExperimentName');
     if (!currentExperimentName) return false;
 
+    var timeDiff = new Date(Date.now() - localStorage.getItem('museFocus:currentExperimentStartTime'));
     var dataStorageName = 'museFocus:currentExperimentData:' + currentExperimentName;
     var currentExperimentsData = JSON.parse(localStorage.getItem(dataStorageName));
     if (currentExperimentsData === null) {
@@ -124,13 +127,14 @@ function writeExperimentData(focusState) {
                                     focusState.getScoreValue(),
                                     focusState.getCurrentFocusState(),
                                     focusState.isFocusStateChanged(),
+                                    timeDiff.getMinutes() + ':' + (timeDiff.getSeconds() + 1)
                                 ]);
     localStorage.setItem(dataStorageName, JSON.stringify(currentExperimentsData));
 }
 
 function downloadExperimentData(experimentName) {
     var currentExperimentsData = JSON.parse(localStorage.getItem('museFocus:currentExperimentData:' + experimentName));
-    var contentHeaders = ['score value', 'focus state', 'is focus state changed'];
+    var contentHeaders = ['score value', 'focus state', 'is focus state changed', 'experiment time'];
     let csvContent = "data:text/csv;charset=utf-8," + contentHeaders.join(",") + "\n" + currentExperimentsData.map(e=>e.join(",")).join("\n");
 
     var encodedUri = encodeURI(csvContent);
