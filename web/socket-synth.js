@@ -98,7 +98,7 @@ var data_is_good  = '/muse/elements/is_good';
 
         // var score = (leftEar + leftForehead + rightForehead + rightEar)/4;
         var score = oscMessage.args[0];
-        score     = score.toFixed(1);
+        score     = score.toFixed(4);
         $("#score").html(score);
     };
 
